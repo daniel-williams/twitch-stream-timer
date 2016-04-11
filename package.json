@@ -1,0 +1,46 @@
+{
+  "name": "twitch-widget",
+  "version": "1.0.0",
+  "description": "Call to action countdown widget for live stream broadcasters.",
+  "scripts": {
+    "dev": "babel-node ./server/app",
+    "deploy": "rm -rf client/content/bundles/* && webpack --progress --colors --config webpack.config.prod.js -p",
+    "postinstall": "typings install"
+  },
+  "keywords": [],
+  "author": "Daniel James Williams",
+  "license": "MIT",
+  "dependencies": {
+    "angular2": "^2.0.0-beta.14",
+    "body-parser": "^1.15.0",
+    "connect-livereload": "^0.5.4",
+    "es6-shim": "^0.35.0",
+    "express": "^4.13.4",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "^5.0.0-beta.2",
+    "zone.js": "^0.6.10"
+  },
+  "devDependencies": {
+    "autoprefixer": "^6.3.6",
+    "babel-core": "^6.7.6",
+    "babel-preset-es2015": "^6.6.0",
+    "connect-livereload": "^0.5.4",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "html-loader": "^0.4.3",
+    "json-loader": "^0.5.4",
+    "node-sass": "^3.4.2",
+    "postcss-loader": "^0.8.2",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^3.1.2",
+    "serve-favicon": "^2.3.0",
+    "style-loader": "^0.13.0",
+    "tiny-lr": "^0.2.1",
+    "ts-loader": "^0.8.1",
+    "tslint": "^3.7.1",
+    "typescript": "^1.8.9",
+    "typings": "^0.7.12",
+    "webpack": "^1.12.15",
+    "webpack-dev-middleware": "^1.6.1"
+  }
+}
