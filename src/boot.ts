@@ -1,7 +1,11 @@
+import {provide} from 'angular2/core';
 import {bootstrap} from 'angular2/platform/browser';
+import {ROUTER_PROVIDERS, LocationStrategy, APP_BASE_HREF} from 'angular2/router'; 
 import {AppComponent} from './app.component';
 
 
-bootstrap(AppComponent, [])
-  .catch(error => console.log(error));
+bootstrap(AppComponent, [
+  ROUTER_PROVIDERS,
+  provide(APP_BASE_HREF, {useValue: '/'})
+]).catch(error => console.log(error));
 
