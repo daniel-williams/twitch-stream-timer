@@ -1,0 +1,25 @@
+<div class='number-dial'>
+  <table>
+    <tbody>
+      <tr class='text-center'>
+        <td>
+          <a (click)='add()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-up'></span></a>
+        </td>
+      </tr>
+      <tr>
+        <td class='form-group'>
+          <input
+            [(ngModel)]='value'
+            (keyup)='handleKeyup($event)'
+            type='text' class='form-control dial'>
+        </td>
+      </tr>
+      <tr class='text-center'>
+        <td>
+          <a (click)='subtract()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-down'></span></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,33 @@
+
+
+.config-group {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+
+  .ttl {
+    margin-top: 0;
+  }
+}
+
+.btn {
+  width: 150px;
+}
+.block {
+  display: block;
+}
+
+.time-picker {
+  min-width: 200px;
+}
+
+.duration {
+
+  .number-dial {
+    float: left;
+  }
+  .number-dial:first-child {
+    margin-right: 5px;
+  }
+}

@@ -1,0 +1,108 @@
+<div id='twitch-widget-config' class='container'>
+  <div class='config-group'>
+    <h3 class='ttl'>Donations</h3>
+    <div class='row'>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Amount</label>
+        <input type='text' class='form-control' [(ngModel)]='donation.amount' />
+      </div>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>User</label>
+        <input type='text' class='form-control' [(ngModel)]='donation.user' />
+      </div>
+      <div class='col-sm-3 form-group'>
+        <div><label>&nbsp;</label></div>
+        <button type='button' class='btn btn-default' (click)='handleDonation($event)'>Add</button>
+      </div>
+    </div>
+    <h4>Current Donations</h4>
+    <div class='row'>
+      <div class='col-xs-3'>
+        <label>Total: {{goal.currentAmount | currency:'USD':true:1.2.2}} ({{(goal.currentAmount / goal.targetAmount) * 100}}%)</label>
+      </div>
+      <div class='col-xs-3'>
+        <label>Today's goal: {{goal.targetAmount | currency:'USD':true:1.2.2}}</label>
+      </div>
+    </div>
+    <div *ngIf='haveDonations()' class='row donation-list'>
+      <div *ngFor='#item of goal.getDonations()' class='col donation'>
+        <div>{{item.user}}: {{item.amount | currency:'USD':true:1.2.2}}</div>
+      </div>
+    </div>
+  </div>
+  <div class='config-group'>
+    <h3 class='ttl'>Timeline Display</h3>
+    <h4>Size</h4>
+    <div class='row'>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Min Height</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.minHeight' />
+      </div>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Max Height</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.maxHeight' />
+      </div>
+    </div>
+    <h4>Colors</h4>
+    <div class='row'>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Foreground</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.foregroundColor' />
+      </div>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Background</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.backgroundColor' />
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Max</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.maxTimelineColor' />
+      </div>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Committed</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.committedTimelineColor' />
+      </div>
+      <div class='col-sm-3 form-group'>
+        <label for='height'>Elapsed</label>
+        <input type='text' class='form-control' [(ngModel)]='settings.elapsedTimelineColor' />
+      </div>
+    </div>
+  </div>
+  <div class='config-group'>
+    <h3 class='ttl'>Stream Time</h3>
+    <div class='row'>
+      <div class='col form-group'>
+        <label class='block'>Time Format</label>
+        <select class='form-control' [(ngModel)]='timeFormat' (change)='handleTimeFormatChange($event.target.value)'>
+          <option *ngFor='#opt of options.timeFormat' [value]='opt'>{{opt}}</option>
+        </select>
+      </div>
+      <div class='col form-group'>
+        <label class='block'>minutes interval:</label>
+        <select class='form-control' [(ngModel)]='minuteInterval'>
+          <option *ngFor='#opt of options.minuteInterval' [value]='opt'>{{opt}}</option>
+        </select>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col form-group time-picker'>
+        <label for='startTime'>Start at</label>
+        <timepicker [(ngModel)]='settings.startTime' [showMeridian]='isMeridian' [minuteStep]='minuteInterval' justified='true'></timepicker>
+      </div>
+      <div class='col form-group time-picker'>
+        <label for='endTime'>Stream for (hh/mm)</label>
+        <div class='duration clearfix'>
+          <number-dial #hours canOverflow={{false}} [(test)]='test' class='number-dial'></number-dial>
+          <number-dial (overflow)='handleMinOverflow($event)' [interval]='minuteInterval' class='number-dial'></number-dial>
+        </div>
+      </div>
+      <div class='col form-group time-picker'>
+        <label for='maxTime'>Stream up to (hh/mm)</label>
+        <timepicker [(ngModel)]='settings.maxTime' [showMeridian]=false [minuteStep]='minuteInterval'></timepicker>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{diagnostic}}

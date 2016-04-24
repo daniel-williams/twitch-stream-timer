@@ -1,6 +1,12 @@
 node_modules/
 typings/
+
 bundles/
 bundle.js
 *.bundle.js
+
+vendor/
+glyphicons*
+
+secrets*
 
