@@ -1,4 +1,4 @@
-<div class='number-dial'>
+<div class='number-input'>
   <table>
     <tbody>
       <tr class='text-center'>
@@ -10,8 +10,8 @@
       <tr>
         <td class='form-group'>
           <input
-            [(ngModel)]='value'
-            (keyup)='handleKeyup($event)'
+            [value]='value'
+            (change)='handleChange($event)'
             type='text' class='form-control dial'>
         </td>
       </tr>

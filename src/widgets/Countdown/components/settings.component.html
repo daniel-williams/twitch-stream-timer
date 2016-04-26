@@ -31,7 +31,38 @@
     </div>
   </div>
   <div class='config-group'>
-    <h3 class='ttl'>Timeline Display</h3>
+    <h3 class='ttl'>Stream Session</h3>
+    <div class='row'>
+      <div class='col form-group'>
+        <label class='block'>Time Format</label>
+        <select class='form-control' [(ngModel)]='timeFormat' (change)='handleTimeFormatChange($event)'>
+          <option *ngFor='#opt of formats' [value]='opt'>{{opt}}</option>
+        </select>
+      </div>
+      <div class='col form-group'>
+        <label class='block'>time interval:</label>
+        <select class='form-control' [(ngModel)]='timeInterval'>
+          <option *ngFor='#opt of intervals' [value]='opt'>{{opt}}</option>
+        </select>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='col form-group time-picker'>
+        <label for='startTime'>Start at</label>
+        <timepicker [(ngModel)]='settings.startTime' [showMeridian]='isMeridian' [minuteStep]='timeInterval' justified='true'></timepicker>
+      </div>
+      <div class='col form-group time-picker'>
+        <label for='endTime'>Stream for (hh/mm)</label>
+        <duration #commitedTime [interval]='timeInterval'></duration>
+      </div>
+      <div class='col form-group time-picker'>
+        <label for='maxTime'>Stream up to (hh/mm)</label>
+        <duration #maxTime [interval]='timeInterval' hours='2'></duration>
+      </div>
+    </div>
+  </div>
+  <div class='config-group'>
+    <h3 class='ttl'>Timeline</h3>
     <h4>Size</h4>
     <div class='row'>
       <div class='col-sm-3 form-group'>
@@ -66,40 +97,6 @@
       <div class='col-sm-3 form-group'>
         <label for='height'>Elapsed</label>
         <input type='text' class='form-control' [(ngModel)]='settings.elapsedTimelineColor' />
-      </div>
-    </div>
-  </div>
-  <div class='config-group'>
-    <h3 class='ttl'>Stream Time</h3>
-    <div class='row'>
-      <div class='col form-group'>
-        <label class='block'>Time Format</label>
-        <select class='form-control' [(ngModel)]='timeFormat' (change)='handleTimeFormatChange($event.target.value)'>
-          <option *ngFor='#opt of options.timeFormat' [value]='opt'>{{opt}}</option>
-        </select>
-      </div>
-      <div class='col form-group'>
-        <label class='block'>minutes interval:</label>
-        <select class='form-control' [(ngModel)]='minuteInterval'>
-          <option *ngFor='#opt of options.minuteInterval' [value]='opt'>{{opt}}</option>
-        </select>
-      </div>
-    </div>
-    <div class='row'>
-      <div class='col form-group time-picker'>
-        <label for='startTime'>Start at</label>
-        <timepicker [(ngModel)]='settings.startTime' [showMeridian]='isMeridian' [minuteStep]='minuteInterval' justified='true'></timepicker>
-      </div>
-      <div class='col form-group time-picker'>
-        <label for='endTime'>Stream for (hh/mm)</label>
-        <div class='duration clearfix'>
-          <number-dial #hours canOverflow={{false}} [(test)]='test' class='number-dial'></number-dial>
-          <number-dial (overflow)='handleMinOverflow($event)' [interval]='minuteInterval' class='number-dial'></number-dial>
-        </div>
-      </div>
-      <div class='col form-group time-picker'>
-        <label for='maxTime'>Stream up to (hh/mm)</label>
-        <timepicker [(ngModel)]='settings.maxTime' [showMeridian]=false [minuteStep]='minuteInterval'></timepicker>
       </div>
     </div>
   </div>

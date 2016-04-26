@@ -2,7 +2,7 @@ import {OpaqueToken} from 'angular2/core';
 export let COUNTDOWN_CONFIG = new OpaqueToken('countdown.config');
 
 
-export interface ICountdownConfig {
+export interface IConfig {
   minHeight?: string;
   maxHeight?: string;
 
@@ -17,7 +17,7 @@ export interface ICountdownConfig {
   maxTime?: Date;
 }
 
-const CountdownDefaults: ICountdownConfig = {
+const Defaults: IConfig = {
   minHeight: '200px',
   maxHeight: '100px',
 
@@ -28,7 +28,7 @@ const CountdownDefaults: ICountdownConfig = {
   elapsedTimelineColor: '#ffea02',
 };
 
-export class CountdownConfig implements ICountdownConfig {
+export class Config implements IConfig {
   minHeight: string;
   maxHeight: string;
 
@@ -42,8 +42,8 @@ export class CountdownConfig implements ICountdownConfig {
   endTime: Date;
   maxTime: Date;
 
-  constructor(options?: ICountdownConfig) {
-    options = Object.assign({}, CountdownDefaults, options || {});
+  constructor(options?: IConfig) {
+    options = Object.assign({}, Defaults, options || {});
     let now = new Date();
 
     this.minHeight = options.minHeight;

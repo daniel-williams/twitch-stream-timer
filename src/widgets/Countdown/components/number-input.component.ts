@@ -1,26 +1,27 @@
 import {Component, EventEmitter, Input, Output} from 'angular2/core';
 import {FORM_DIRECTIVES} from 'angular2/common';
 
-import {booleanConverter, numberConverter} from '../../utils/TypeConverters';
+import {booleanConverter, numberConverter} from '../../../utils/TypeConverters';
 
 // webpack imports
-let template = require('./number-dial.component.html');
-let style = require('./number-dial.component.scss');
+let template = require('./number-input.component.html');
+let style = require('./number-input.component.scss');
 
 @Component({
-  selector: 'number-dial',
+  selector: 'number-input',
   directives: [FORM_DIRECTIVES],
   template: template,
   styles: [style]
 })
-export class NumberDialComponent {
+export class NumberInputComponent {
 
   @Input() value: number = 0;
   @Input() interval: number = 1;
   @Input() min: number = 0;
-  @Input() max: number = 59;
+  @Input() max: number = Infinity;
   @Input() canOverflow: boolean = true;
 
+  @Output() change: EventEmitter<number> = new EventEmitter(false);
   @Output() overflow: EventEmitter<number> = new EventEmitter(false);
 
   ngOnInit() {
@@ -28,13 +29,15 @@ export class NumberDialComponent {
   }
 
   add(theValue?: number) {
-    let delta: IValueDelta = this.adjustForLimits(this.value + (theValue || this.interval));
+    let delta: IValueDelta =
+      this.adjustForLimits(this.value + (theValue || numberConverter(this.interval)));
 
     this.value = delta.value;
     this.handleOverflow(delta);
   }
   subtract(theValue?: number) {
-    let delta: ValueDelta = this.adjustForLimits(this.value - (theValue || this.interval));
+    let delta: ValueDelta =
+      this.adjustForLimits(this.value - (theValue || numberConverter(this.interval)));
 
     this.value = delta.value;
     this.handleOverflow(delta);
@@ -63,18 +66,29 @@ export class NumberDialComponent {
     return delta;
   }
 
-  handleOverflow(delta: IValueDelta) {
-    if (this.canOverflow && delta.overflow) {
-      this.overflow.emit(delta.overflow);
+
+
+  handleKeyup(evt) {
+    evt.preventDefault();
+    let num = parseInt(evt.target.value, 10);
+    if (!isNaN(num)) {
+      this.value = num;
+    }
+    evt.target.value = this.value;
+  }
+
+  handleChange(evt) {
+    console.log('number input change');
+    evt.preventDefault();
+    let num = parseInt(evt.target.value, 10);
+    if (!isNaN(num)) {
+      this.change.emit(num);
     }
   }
 
-  handleKeyup(evt) {
-    let num = parseInt(evt.target.value, 10);
-    if (isNaN(num)) {
-      evt.target.value = this.value;
-    } else {
-      this.value = num;
+  handleOverflow(delta: IValueDelta) {
+    if (this.canOverflow && delta.overflow) {
+      this.overflow.emit(delta.overflow);
     }
   }
 

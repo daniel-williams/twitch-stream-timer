@@ -1,0 +1,15 @@
+<div class='duration clearfix'>
+  <number-input #hoursDial
+    [value]=hours
+    [canOverflow]=false
+    (change)='handleUpdates($event)'
+    class='number-input'></number-input>
+  <number-input #minutesDial
+    [value]=minutes
+    [min]=0
+    [max]=59
+    [interval]='interval'
+    (overflow)='handleMinOverflow($event)'
+    (change)='handleUpdates($event)'
+    class='number-input'></number-input>
+</div>
