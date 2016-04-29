@@ -42,15 +42,10 @@ export class SettingsComponent implements AfterViewInit {
   committedHour: number = 2;
   committedMin: number = 0;
 
-  // public options: any = {
-  //   interval: [1, 5, 10, 15, 30, 45, 60],
-  //   format: ['2:00 PM', '14:00']
-  // };
   public isMeridian: boolean = true;
   public timeInterval: number = 15;
   public timeFormat: string = this.formats[0];
 
-  submitted: boolean = false;
   @ViewChild('hours') hours: NumberInputComponent;
 
   haveDonations(): boolean {
