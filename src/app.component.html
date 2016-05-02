@@ -1,3 +1,20 @@
 <div class='countdown-wrap'>
+  <div>
+    <label>Custom Input</label>
+    <custom-input [(ngModel)]='name.first'></custom-input>
+  </div>
+  <div>
+    <label>My Input</label>
+    <my-input [(ngModel)]='name.middle'></my-input>
+  </div>
+  <div>
+    <label>Wrapped Input</label>
+    <wrapped-input
+      [(ngModel)]='name.last'
+      (valueChange)='logValueChange($event)'
+      (change)='logChange($event)'></wrapped-input>
+  </div>
+
+  <div>hello {{name.first}} {{name.middle}} {{name.last}}</div>
   <router-outlet></router-outlet>
 </div>
