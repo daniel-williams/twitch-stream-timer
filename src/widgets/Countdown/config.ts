@@ -13,8 +13,8 @@ export interface IConfig {
   elapsedTimelineColor?: string;
 
   startTime?: Date;
-  endTime?: Date;
-  maxTime?: Date;
+  endTime?: number;
+  maxTime?: number;
 }
 
 const Defaults: IConfig = {
@@ -39,8 +39,8 @@ export class Config implements IConfig {
   elapsedTimelineColor: string;
 
   startTime: Date;
-  endTime: Date;
-  maxTime: Date;
+  endTime: number;
+  maxTime: number;
 
   constructor(options?: IConfig) {
     options = Object.assign({}, Defaults, options || {});
@@ -56,8 +56,8 @@ export class Config implements IConfig {
     this.elapsedTimelineColor = options.elapsedTimelineColor;
 
     this.startTime = options.startTime || now;
-    this.endTime = options.endTime || new Date(now.getTime() + 1000 * 60 * 60 * 2);
-    this.maxTime = options.maxTime || new Date(now.getTime() + 1000 * 60 * 60 * 4);
+    this.endTime = options.endTime || 1000 * 60 * 60 * 2;
+    this.maxTime = options.maxTime || 1000 * 60 * 60 * 4;
   }
 }
 

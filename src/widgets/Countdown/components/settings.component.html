@@ -53,11 +53,11 @@
       </div>
       <div class='col form-group time-picker'>
         <label for='endTime'>Stream for (hh/mm)</label>
-        <duration #commitedTime [interval]='timeInterval'></duration>
+        <duration [(ngModel)]='settings.endTime' [interval]='timeInterval' (valueChange)='logDurationChange($event)'></duration>
       </div>
       <div class='col form-group time-picker'>
         <label for='maxTime'>Stream up to (hh/mm)</label>
-        <duration #maxTime [interval]='timeInterval' hours='2'></duration>
+        <duration [(ngModel)]='settings.maxTime' [interval]='timeInterval'></duration>
       </div>
     </div>
   </div>

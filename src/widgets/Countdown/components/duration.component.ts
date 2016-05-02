@@ -1,36 +1,130 @@
-import {Component, Input, Output, ViewChild} from 'angular2/core';
-
-import {NumberInputComponent} from './number-input.component';
+import {Component, EventEmitter, Input, Output} from 'angular2/core';
 
 
 let template = require('./duration.component.html');
 let style = require('./duration.component.scss');
+let MILLIS_PER_MINUTE = (60 * 1000);
+let MILLIS_PER_HOUR = (60 * MILLIS_PER_MINUTE);
 
 @Component({
   selector: 'duration',
-  directives: [NumberInputComponent],
   template: template,
   styles: [style]
 })
 export class DurationComponent {
 
-  @Input() hours: number = 2;
-  @Input() minutes: number = 0;
+  @Output() valueChange: EventEmitter<number>;
+  @Output() blur: EventEmitter<any>;
+
+  // @Input()
+  // get interval(): number {
+  //   return this._interval;
+  // }
+  // set interval(v: number) {
+  //   if (typeof v === 'number' && v > 0) {
+  //     this._interval = v;
+  //   }
+  // }
+
   @Input() interval: number = 15;
+  // private _interval: number = 15;
+  private milliseconds: number;
+  private hours: string;
+  private minutes: string;
 
-  @ViewChild('hoursDial') hoursDial: NumberInputComponent;
-  @ViewChild('minutesDial') minutesDial: NumberInputComponent;
+  constructor() {
+    this.valueChange = new EventEmitter();
+    this.blur = new EventEmitter();
+  }
 
-  handleMinOverflow(val: number): void {
-    if (val < 0) {
-      this.hoursDial.subtract(Math.abs(val));
+  setValue(v: any) {
+    if (v === this.milliseconds) { return; }
+    if (typeof v === 'number') {
+      this.milliseconds = v;
     } else {
-      this.hoursDial.add(val);
+      let n = parseInt(v, 10);
+      if (!isNaN(n)) {
+        this.milliseconds = n;
+      }
+    }
+    this.modelToViewUpdate();
+  }
+
+  handleHoursBlur(): void {
+    this.hours = this.pad(this.hours);
+    this.blur.emit(void 0);
+  }
+  handleMinutesBlur(): void {
+    this.minutes = this.pad(this.minutes);
+    this.blur.emit(void 0);
+  }
+
+  handleAddHours() {
+    this.milliseconds += MILLIS_PER_HOUR;
+    this.modelToViewUpdate();
+    this.valueChange.emit(this.milliseconds);
+  }
+  handleSubtractHours() {
+    this.milliseconds -= MILLIS_PER_HOUR;
+    this.modelToViewUpdate();
+    this.valueChange.emit(this.milliseconds);
+  }
+  handleAddMinutes() {
+    this.milliseconds += MILLIS_PER_MINUTE * this.interval;
+    this.modelToViewUpdate();
+    this.valueChange.emit(this.milliseconds);
+  }
+  handleSubtractMinutes() {
+    this.milliseconds -= MILLIS_PER_MINUTE * this.interval;
+    this.modelToViewUpdate();
+    this.valueChange.emit(this.milliseconds);
+  }
+
+  handleHoursKeyup(evt) {
+    let h = parseInt(this.hours, 10);
+    if (!isNaN(h)) {
+      if (h < 0) {
+        this.hours = '00';
+      }
+    }
+    this.viewToModelUpdate();
+  }
+  handleMinutesKeyup(evt) {
+    let m = parseInt(this.minutes, 10);
+    if (!isNaN(m)) {
+      if (m > 59) {
+        this.minutes = '59';
+      } else if (m < 0) {
+        this.minutes = '00';
+      }
+    }
+    this.viewToModelUpdate();
+  }
+
+  viewToModelUpdate() {
+    let h = parseInt(this.hours, 10);
+    let m = parseInt(this.minutes, 10);
+    if (isNaN(h) || isNaN(m)) {
+      this.modelToViewUpdate();
+    } else {
+      this.milliseconds = (h * MILLIS_PER_HOUR) + (m * MILLIS_PER_MINUTE);
+      this.valueChange.emit(this.milliseconds);
     }
   }
 
-  handleUpdates(evt) {
-    console.log(`hours: ${this.hours}, minutes: ${this.minutes}`);
+  modelToViewUpdate() {
+    if (this.milliseconds < 0) { this.milliseconds = 0; }
+
+    let h = Math.floor(this.milliseconds / MILLIS_PER_HOUR);
+    this.hours = this.pad(h);
+
+    let m = Math.floor((this.milliseconds - (h * MILLIS_PER_HOUR)) / MILLIS_PER_MINUTE);
+    this.minutes = this.pad(m);
   }
 
+  private pad(value: string|number): string {
+    return (value.toString().length < 2)
+      ? '0' + value
+      : value.toString();
+  }
 }

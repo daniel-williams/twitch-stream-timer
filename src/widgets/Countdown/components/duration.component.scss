@@ -4,9 +4,10 @@
   padding: 5px 10px;
 
   .number-input {
-    float: left;
+    width: 50px;
+    text-align: center;
   }
-  .number-input:first-child {
-    margin-right: 5px;
+  .seperator {
+    margin: 0 3px;
   }
 }

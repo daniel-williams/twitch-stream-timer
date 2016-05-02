@@ -1,15 +1,43 @@
-<div class='duration clearfix'>
-  <number-input #hoursDial
-    [value]=hours
-    [canOverflow]=false
-    (change)='handleUpdates($event)'
-    class='number-input'></number-input>
-  <number-input #minutesDial
-    [value]=minutes
-    [min]=0
-    [max]=59
-    [interval]='interval'
-    (overflow)='handleMinOverflow($event)'
-    (change)='handleUpdates($event)'
-    class='number-input'></number-input>
+<div class='duration'>
+  <table>
+    <tbody>
+      <tr class='text-center'>
+        <td>
+          <a (click)='handleAddHours()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-up'></span></a>
+        </td>
+        <td></td>
+        <td>
+          <a (click)='handleAddMinutes()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-up'></span></a>
+        </td>
+      </tr>
+      <tr>
+        <td class='form-group'>
+          <input type='text' class='form-control number-input'
+            [(ngModel)]='hours'
+            (keyup)='handleHoursKeyup($event)'
+            (blur)='handleHoursBlur()'>
+        </td>
+        <td><span class='seperator'>:</span></td>
+        <td class='form-group'>
+          <input type='text' class='form-control number-input'
+            [(ngModel)]='minutes'
+            (keyup)='handleMinutesKeyup($event)'
+            (blur)='handleMinutesBlur()'>
+        </td>
+      </tr>
+      <tr class='text-center'>
+        <td>
+          <a (click)='handleSubtractHours()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-down'></span></a>
+        </td>
+        <td></td>
+        <td>
+          <a (click)='handleSubtractMinutes()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-down'></span></a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>

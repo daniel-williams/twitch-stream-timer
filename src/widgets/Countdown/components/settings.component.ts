@@ -6,7 +6,7 @@ import {Timepicker} from 'ng2-bootstrap';
 
 import {IConfig, Config} from '../config';
 import {DurationComponent} from './duration.component';
-import {NumberInputComponent} from './number-input.component';
+import {DurationAccessor} from './duration.accessor';
 
 import {Donation} from '../Donation';
 import {Goal} from '../Goal';
@@ -24,8 +24,8 @@ let intervals = [1, 5, 10, 15, 30, 45, 60]; // TODO(djw): convert into value pro
   selector: 'settings',
   directives: [
     Timepicker,
-    NumberInputComponent,
     DurationComponent,
+    DurationAccessor,
     CORE_DIRECTIVES,
     FORM_DIRECTIVES,
     ROUTER_DIRECTIVES
@@ -39,26 +39,24 @@ export class SettingsComponent implements AfterViewInit {
   goal: Goal = new Goal();
   donation: Donation = new Donation();
 
-  committedHour: number = 2;
-  committedMin: number = 0;
+  // committedHour: number = 2;
+  // committedMin: number = 0;
 
   public isMeridian: boolean = true;
   public timeInterval: number = 15;
   public timeFormat: string = this.formats[0];
 
-  @ViewChild('hours') hours: NumberInputComponent;
-
   haveDonations(): boolean {
     return this.goal.count > 0;
   }
 
-  handleMinOverflow(val: number): void {
-    if (val < 0) {
-      this.hours.subtract(Math.abs(val));
-    } else {
-      this.hours.add(val);
-    }
-  }
+  // handleMinOverflow(val: number): void {
+  //   if (val < 0) {
+  //     this.hours.subtract(Math.abs(val));
+  //   } else {
+  //     this.hours.add(val);
+  //   }
+  // }
 
   handleTimeFormatChange(evt): void {
     this.isMeridian = evt.target.value === this.formats[0];
@@ -86,6 +84,10 @@ export class SettingsComponent implements AfterViewInit {
       settings: JSON.stringify(this.settings),
       goal: JSON.stringify(this.goal),
     });
+  }
+
+  logDurationChange(evt) {
+    console.log('duraction change', evt);
   }
 
 }
