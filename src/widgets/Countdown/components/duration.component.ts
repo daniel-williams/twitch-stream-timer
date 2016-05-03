@@ -16,18 +16,8 @@ export class DurationComponent {
   @Output() valueChange: EventEmitter<number>;
   @Output() blur: EventEmitter<any>;
 
-  // @Input()
-  // get interval(): number {
-  //   return this._interval;
-  // }
-  // set interval(v: number) {
-  //   if (typeof v === 'number' && v > 0) {
-  //     this._interval = v;
-  //   }
-  // }
-
   @Input() interval: number = 15;
-  // private _interval: number = 15;
+
   private milliseconds: number;
   private hours: string;
   private minutes: string;

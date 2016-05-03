@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ViewChild} from 'angular2/core';
+import {Component, ViewChild} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {NgForm} from 'angular2/common';
@@ -33,14 +33,11 @@ let intervals = [1, 5, 10, 15, 30, 45, 60]; // TODO(djw): convert into value pro
   template: template,
   styles: [style]
 })
-export class SettingsComponent implements AfterViewInit {
+export class SettingsComponent {
 
   settings: IConfig = new Config();
   goal: Goal = new Goal();
   donation: Donation = new Donation();
-
-  // committedHour: number = 2;
-  // committedMin: number = 0;
 
   public isMeridian: boolean = true;
   public timeInterval: number = 15;
@@ -50,14 +47,6 @@ export class SettingsComponent implements AfterViewInit {
     return this.goal.count > 0;
   }
 
-  // handleMinOverflow(val: number): void {
-  //   if (val < 0) {
-  //     this.hours.subtract(Math.abs(val));
-  //   } else {
-  //     this.hours.add(val);
-  //   }
-  // }
-
   handleTimeFormatChange(evt): void {
     this.isMeridian = evt.target.value === this.formats[0];
   }
@@ -65,10 +54,6 @@ export class SettingsComponent implements AfterViewInit {
   handleDonation(evt): void {
     this.goal.addDonation(new Donation(numberConverter(this.donation.amount), this.donation.user));
     this.donation = new Donation();
-  }
-
-  ngAfterViewInit() {
-    console.log('view init');
   }
 
   get intervals() {
@@ -86,8 +71,12 @@ export class SettingsComponent implements AfterViewInit {
     });
   }
 
-  logDurationChange(evt) {
-    console.log('duraction change', evt);
+  handleEndTimeChange(v: number): void {
+    this.settings.maxTime = Math.max(v, this.settings.maxTime);
+  }
+
+  handleMaxTimeChange(v: number): void {
+    this.settings.endTime = Math.min(this.settings.endTime, v);
   }
 
 }
