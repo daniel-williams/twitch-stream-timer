@@ -7,6 +7,8 @@ import {Timepicker} from 'ng2-bootstrap';
 import {IConfig, Config} from '../config';
 import {DurationComponent} from './duration.component';
 import {DurationAccessor} from './duration.accessor';
+import {DonationsComponent} from './donations.component';
+import {DonationsAccessor} from './donations.accessor';
 
 import {Donation} from '../Donation';
 import {Goal} from '../Goal';
@@ -26,6 +28,8 @@ let intervals = [1, 5, 10, 15, 30, 45, 60]; // TODO(djw): convert into value pro
     Timepicker,
     DurationComponent,
     DurationAccessor,
+    DonationsComponent,
+    DonationsAccessor,
     CORE_DIRECTIVES,
     FORM_DIRECTIVES,
     ROUTER_DIRECTIVES
@@ -37,24 +41,10 @@ export class SettingsComponent {
 
   settings: IConfig = new Config();
   goal: Goal = new Goal();
-  donation: Donation = new Donation();
 
   public isMeridian: boolean = true;
   public timeInterval: number = 15;
   public timeFormat: string = this.formats[0];
-
-  haveDonations(): boolean {
-    return this.goal.count > 0;
-  }
-
-  handleTimeFormatChange(evt): void {
-    this.isMeridian = evt.target.value === this.formats[0];
-  }
-
-  handleDonation(evt): void {
-    this.goal.addDonation(new Donation(numberConverter(this.donation.amount), this.donation.user));
-    this.donation = new Donation();
-  }
 
   get intervals() {
     return intervals;
@@ -71,13 +61,19 @@ export class SettingsComponent {
     });
   }
 
-  handleEndTimeChange(v: number): void {
+  constructor() {
+    this.goal.donations = [new Donation(20, 'daniel')];
+  }
+
+  private handleTimeFormatChange(evt): void {
+    this.isMeridian = evt.target.value === this.formats[0];
+  }
+
+  private handleEndTimeChange(v: number): void {
     this.settings.maxTime = Math.max(v, this.settings.maxTime);
   }
 
-  handleMaxTimeChange(v: number): void {
+  private handleMaxTimeChange(v: number): void {
     this.settings.endTime = Math.min(this.settings.endTime, v);
   }
-
 }
-

@@ -1,0 +1,21 @@
+<div class='donations'>
+  <div class='row'>
+    <div class='col-sm-3 form-group'>
+      <label for='height'>Amount</label>
+      <input type='text' class='form-control' [(ngModel)]='donation.amount' />
+    </div>
+    <div class='col-sm-3 form-group'>
+      <label for='height'>User</label>
+      <input type='text' class='form-control' [(ngModel)]='donation.user' />
+    </div>
+    <div class='col-sm-3 form-group'>
+      <div><label>&nbsp;</label></div>
+      <button type='button' class='btn btn-default' (click)='handleDonation($event)'>Add</button>
+    </div>
+  </div>
+  <div *ngIf='donations && donations.length' class='row donation-list'>
+    <div *ngFor='#item of donations' class='col donation'>
+      <div>{{item.amount | currency:'USD':true:1.2.2}} : {{item.user || '?'}}<span class='remove glyphicon glyphicon-remove' (click)='handleRemove(item)'></span></div>
+    </div>
+  </div>
+</div>

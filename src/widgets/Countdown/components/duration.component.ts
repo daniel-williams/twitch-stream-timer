@@ -3,6 +3,7 @@ import {Component, EventEmitter, Input, Output} from 'angular2/core';
 
 let template = require('./duration.component.html');
 let style = require('./duration.component.scss');
+
 let MILLIS_PER_MINUTE = (60 * 1000);
 let MILLIS_PER_HOUR = (60 * MILLIS_PER_MINUTE);
 
@@ -12,7 +13,6 @@ let MILLIS_PER_HOUR = (60 * MILLIS_PER_MINUTE);
   styles: [style]
 })
 export class DurationComponent {
-
   @Output() valueChange: EventEmitter<number>;
   @Output() blur: EventEmitter<any>;
 
@@ -40,37 +40,37 @@ export class DurationComponent {
     this.modelToViewUpdate();
   }
 
-  handleHoursBlur(): void {
+  private handleHoursBlur(): void {
     this.hours = this.pad(this.hours);
     this.blur.emit(void 0);
   }
-  handleMinutesBlur(): void {
+  private handleMinutesBlur(): void {
     this.minutes = this.pad(this.minutes);
     this.blur.emit(void 0);
   }
 
-  handleAddHours() {
+  private handleAddHours() {
     this.milliseconds += MILLIS_PER_HOUR;
     this.modelToViewUpdate();
     this.valueChange.emit(this.milliseconds);
   }
-  handleSubtractHours() {
+  private handleSubtractHours() {
     this.milliseconds -= MILLIS_PER_HOUR;
     this.modelToViewUpdate();
     this.valueChange.emit(this.milliseconds);
   }
-  handleAddMinutes() {
+  private handleAddMinutes() {
     this.milliseconds += MILLIS_PER_MINUTE * this.interval;
     this.modelToViewUpdate();
     this.valueChange.emit(this.milliseconds);
   }
-  handleSubtractMinutes() {
+  private handleSubtractMinutes() {
     this.milliseconds -= MILLIS_PER_MINUTE * this.interval;
     this.modelToViewUpdate();
     this.valueChange.emit(this.milliseconds);
   }
 
-  handleHoursKeyup(evt) {
+  private handleHoursKeyup(evt) {
     let h = parseInt(this.hours, 10);
     if (!isNaN(h)) {
       if (h < 0) {
@@ -79,7 +79,7 @@ export class DurationComponent {
     }
     this.viewToModelUpdate();
   }
-  handleMinutesKeyup(evt) {
+  private handleMinutesKeyup(evt) {
     let m = parseInt(this.minutes, 10);
     if (!isNaN(m)) {
       if (m > 59) {
@@ -91,7 +91,7 @@ export class DurationComponent {
     this.viewToModelUpdate();
   }
 
-  viewToModelUpdate() {
+  private viewToModelUpdate() {
     let h = parseInt(this.hours, 10);
     let m = parseInt(this.minutes, 10);
     if (isNaN(h) || isNaN(m)) {
@@ -102,7 +102,7 @@ export class DurationComponent {
     }
   }
 
-  modelToViewUpdate() {
+  private modelToViewUpdate() {
     if (this.milliseconds < 0) { this.milliseconds = 0; }
 
     let h = Math.floor(this.milliseconds / MILLIS_PER_HOUR);

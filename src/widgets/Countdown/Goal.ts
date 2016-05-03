@@ -3,7 +3,7 @@ import {Donation} from './Donation';
 
 export class Goal {
   targetAmount: number;
-  private donations: Donation[];
+  donations: Donation[];
 
   constructor(targetAmount?: number) {
     this.targetAmount = targetAmount || 20;
@@ -20,18 +20,18 @@ export class Goal {
     }, 0);
   }
 
-  addDonation(donation: Donation): void {
-    if (!donation
-      || typeof donation.amount !== 'number'
-      || donation.amount <= 0
-    ) {
-      return;
-    }
-    this.donations.push(donation);
-  }
-  getDonations(): Donation[] {
-    return this.donations;
-  }
+  // addDonation(donation: Donation): void {
+  //   if (!donation
+  //     || typeof donation.amount !== 'number'
+  //     || donation.amount <= 0
+  //   ) {
+  //     return;
+  //   }
+  //   this.donations.push(donation);
+  // }
+  // getDonations(): Donation[] {
+  //   return this.donations;
+  // }
 
   reachedGoal(): boolean {
     return this.currentAmount >= this.targetAmount;

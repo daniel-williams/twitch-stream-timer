@@ -1,20 +1,5 @@
 <div id='twitch-widget-config' class='container'>
   <div class='config-group'>
-    <h3 class='ttl'>Donations</h3>
-    <div class='row'>
-      <div class='col-sm-3 form-group'>
-        <label for='height'>Amount</label>
-        <input type='text' class='form-control' [(ngModel)]='donation.amount' />
-      </div>
-      <div class='col-sm-3 form-group'>
-        <label for='height'>User</label>
-        <input type='text' class='form-control' [(ngModel)]='donation.user' />
-      </div>
-      <div class='col-sm-3 form-group'>
-        <div><label>&nbsp;</label></div>
-        <button type='button' class='btn btn-default' (click)='handleDonation($event)'>Add</button>
-      </div>
-    </div>
     <h4>Current Donations</h4>
     <div class='row'>
       <div class='col-xs-3'>
@@ -24,11 +9,8 @@
         <label>Today's goal: {{goal.targetAmount | currency:'USD':true:1.2.2}}</label>
       </div>
     </div>
-    <div *ngIf='haveDonations()' class='row donation-list'>
-      <div *ngFor='#item of goal.getDonations()' class='col donation'>
-        <div>{{item.user}}: {{item.amount | currency:'USD':true:1.2.2}}</div>
-      </div>
-    </div>
+    <h4>Donations</h4>
+    <donations [(ngModel)]='goal.donations'></donations>
   </div>
   <div class='config-group'>
     <h3 class='ttl'>Stream Session</h3>
