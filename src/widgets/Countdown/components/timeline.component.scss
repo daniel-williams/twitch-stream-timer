@@ -1,13 +1,34 @@
-.timeline-wrap {
+.timeline {
   position: relative;
   width: 100%;
-  min-height: 100px;
-  height: 100px;
-  background-color: orange;
 }
 
-.timeline {
+.segments-wrap {
+  position: relative;
+  width: 100%;
+  border: 1px solid #222;
+  box-sizing: border-box;
+}
+
+.segment {
   float: left;
-  opacity: 0.7;
-  text-align: center;
+  height: 100%;
+  line-height: inherit;
+  transition: width 1s;
+
+  .lbl {
+    margin: 0 10px;
+  }
+}
+
+.segment-elapsed {
+  text-align: right;
+}
+
+.segment-min {
+  text-align: left;
+}
+
+.segment-max {
+  text-align: right;
 }

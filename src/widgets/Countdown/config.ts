@@ -19,7 +19,7 @@ export interface IConfig {
 
 const Defaults: IConfig = {
   minHeight: 50,
-  maxHeight: 200,
+  maxHeight: 75,
 
   foregroundColor: '#ffffff',
   backgroundColor: '#04ff02',

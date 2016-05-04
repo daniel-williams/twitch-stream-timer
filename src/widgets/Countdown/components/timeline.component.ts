@@ -44,62 +44,72 @@ export class TimelineComponent implements OnInit, OnDestroy {
     }
   }
 
-  getElapsedStyle() {
-    let h = this.config.minHeight + 'px';
-    let elapsed = this.now.getTime() - this.startTime.getTime();
-
-    let w = this.isStreaming
-     ? (elapsed / this.config.maxTime * 100) + '%'
-     : 0;
+  getTimelineStyle() {
     return {
-      left: 0,
+      height: this.config.maxHeight + 'px',
+      padding: (this.config.maxHeight - this.config.minHeight) / 2 + 'px 0',
+      backgroundColor: this.config.backgroundColor,
+    };
+  }
+
+  getSegmentsWrapStyle() {
+    let h = this.config.minHeight + 'px';
+    return {
       height: h,
-      width: w,
       lineHeight: h,
+    };
+  }
+
+  getElapsedStyle() {
+    let span = this.now.getTime() - this.startTime.getTime();
+    let w = this.isStreaming
+     ? (span / this.config.maxTime * 100) + '%'
+     : 0;
+
+    return {
+      width: w,
       backgroundColor: this.config.elapsedTimelineColor,
     };
   }
 
-  getMaxStyle() {
-    let h = this.config.minHeight + 'px';
-    return {
-      lineHeight: h,
-      height: h,
-      width: 0,
-    };
-  }
-
   getMinStyle() {
-    let h = this.config.minHeight + 'px';
+    let span = this.minEndTime.getTime() - this.now.getTime();
+    let w = this.isStreaming
+     ? (span / this.config.maxTime * 100) + '%'
+     : 0;
+     console.log('minStyle width:', span, w);
     return {
-      lineHeight: h,
-      height: h,
-      width: 0,
+      width: w,
+      backgroundColor: this.config.committedTimelineColor,
     };
   }
 
+  getMaxStyle() {
+    return {
+    };
+  }
 
 
   private tick() {
     this.now = new Date();
     this.startTime = this.config.startTime;
-    this.minEndTime = new Date(this.now.getTime() + this.config.endTime);
-    this.maxEndTime = new Date(this.now.getTime() + this.config.maxTime);
+    this.minEndTime = new Date(this.startTime.getTime() + this.config.endTime);
+    this.maxEndTime = new Date(this.startTime.getTime() + this.config.maxTime);
 
     this.isBeforeStream = this.now < this.startTime;
     this.isStreaming = this.now >= this.config.startTime && this.now <= this.minEndTime;
     this.isNotStreaming = !this.isStreaming;
     this.isAfterStream = this.now > this.minEndTime;
 
-    // this.timeUntilStream = this.isBeforeStream
-    //   ? this.timeFromMilliseconds(Math.abs(this.startTime.getTime() - this.now.getTime()))
-    //   : '';
+    this.timeUntilStream = this.isBeforeStream
+      ? this.timeFromMilliseconds(Math.abs(this.startTime.getTime() - this.now.getTime()))
+      : '';
     this.timeStreaming = this.isStreaming
       ? this.timeFromMilliseconds(Math.abs(this.now.getTime() - this.startTime.getTime()))
       : '';
-    // this.timeRemaining = this.isStreaming
-    //   ? this.timeFromMilliseconds(Math.abs(this.minEndTime.getTime() - this.now.getTime()))
-    //   : '';
+    this.timeRemaining = this.isStreaming
+      ? this.timeFromMilliseconds(Math.abs(this.minEndTime.getTime() - this.now.getTime()))
+      : '';
   }
 
 
