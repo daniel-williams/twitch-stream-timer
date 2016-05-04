@@ -1,6 +1,13 @@
-.timeline {
+.timeline-wrap {
+  position: relative;
   width: 100%;
   min-height: 100px;
   height: 100px;
   background-color: orange;
+}
+
+.timeline {
+  float: left;
+  opacity: 0.7;
+  text-align: center;
 }

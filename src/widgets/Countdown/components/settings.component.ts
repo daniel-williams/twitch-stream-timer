@@ -1,10 +1,10 @@
-import {Component, ViewChild} from 'angular2/core';
+import {Component, Input} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES} from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {NgForm} from 'angular2/common';
 import {Timepicker} from 'ng2-bootstrap';
 
-import {IConfig, Config} from '../config';
+import {Config} from '../Config';
 import {DurationComponent} from './duration.component';
 import {DurationAccessor} from './duration.accessor';
 import {DonationsComponent} from './donations.component';
@@ -39,7 +39,8 @@ let intervals = [1, 5, 10, 15, 30, 45, 60]; // TODO(djw): convert into value pro
 })
 export class SettingsComponent {
 
-  settings: IConfig = new Config();
+  @Input() config: Config;
+
   goal: Goal = new Goal();
 
   public isMeridian: boolean = true;
@@ -53,14 +54,6 @@ export class SettingsComponent {
     return formats;
   }
 
-  // TODO(djw): Remove this when we're done testing
-  get diagnostic() {
-    return JSON.stringify({
-      settings: JSON.stringify(this.settings),
-      goal: JSON.stringify(this.goal),
-    });
-  }
-
   constructor() {
     this.goal.donations = [new Donation(20, 'daniel')];
   }
@@ -70,10 +63,10 @@ export class SettingsComponent {
   }
 
   private handleEndTimeChange(v: number): void {
-    this.settings.maxTime = Math.max(v, this.settings.maxTime);
+    this.config.maxTime = Math.max(v, this.config.maxTime);
   }
 
   private handleMaxTimeChange(v: number): void {
-    this.settings.endTime = Math.min(this.settings.endTime, v);
+    this.config.endTime = Math.min(this.config.endTime, v);
   }
 }

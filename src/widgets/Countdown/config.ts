@@ -3,8 +3,8 @@ export let COUNTDOWN_CONFIG = new OpaqueToken('countdown.config');
 
 
 export interface IConfig {
-  minHeight?: string;
-  maxHeight?: string;
+  minHeight?: number;
+  maxHeight?: number;
 
   foregroundColor?: string;
   backgroundColor?: string;
@@ -18,8 +18,8 @@ export interface IConfig {
 }
 
 const Defaults: IConfig = {
-  minHeight: '100px',
-  maxHeight: '200px',
+  minHeight: 50,
+  maxHeight: 200,
 
   foregroundColor: '#ffffff',
   backgroundColor: '#04ff02',
@@ -29,8 +29,8 @@ const Defaults: IConfig = {
 };
 
 export class Config implements IConfig {
-  minHeight: string;
-  maxHeight: string;
+  minHeight: number;
+  maxHeight: number;
 
   foregroundColor: string;
   backgroundColor: string;

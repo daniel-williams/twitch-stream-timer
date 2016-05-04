@@ -1,3 +1,11 @@
-<div class='timeline'>
-
+<div class='timeline-wrap clearfix'>
+  <div class='timeline timeline-elapsed'
+    *ngIf='isStreaming'
+    [ngStyle]='getElapsedStyle()'>{{timeStreaming}}</div>
+  <div class='timeline timeline-min'
+    *ngIf='isStreaming'
+    [ngStyle]='getMinStyle()'></div>
+  <div class='timeline timeline-max'
+     *ngIf='isStreaming'
+     [ngStyle]='getMaxStyle()'></div>
 </div>

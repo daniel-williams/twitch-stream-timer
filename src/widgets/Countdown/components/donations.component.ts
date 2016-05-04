@@ -31,16 +31,15 @@ export class DonationsComponent {
   private handleDonation(evt): void {
     let amount = numberConverter(this.donation.amount);
     if (amount > 0) {
-      this.donations.push(new Donation(amount, this.donation.user));
+      this.donations.push(new Donation(amount, this.donation.name));
       this.donation = new Donation();
     }
   }
 
   private handleRemove(item) {
-    console.log('handleRemove', item);
     let idx = this.donations.length - 1;
     for (; idx >= 0; idx--) {
-      if (this.donations[idx].amount === item.amount && this.donations[idx].user === item.user) {
+      if (this.donations[idx].amount === item.amount && this.donations[idx].name === item.name) {
         this.donations.splice(idx, 1);
       }
     }

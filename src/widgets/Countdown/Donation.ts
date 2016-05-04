@@ -1,9 +1,9 @@
 export class Donation {
   amount: number;
-  user: string;
+  name: string;
 
-  constructor(amount?: number, user?: string) {
+  constructor(amount?: number, name?: string) {
     this.amount = amount;
-    this.user = user;
+    this.name = name;
   }
 }

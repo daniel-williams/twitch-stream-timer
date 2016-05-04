@@ -20,19 +20,6 @@ export class Goal {
     }, 0);
   }
 
-  // addDonation(donation: Donation): void {
-  //   if (!donation
-  //     || typeof donation.amount !== 'number'
-  //     || donation.amount <= 0
-  //   ) {
-  //     return;
-  //   }
-  //   this.donations.push(donation);
-  // }
-  // getDonations(): Donation[] {
-  //   return this.donations;
-  // }
-
   reachedGoal(): boolean {
     return this.currentAmount >= this.targetAmount;
   }
