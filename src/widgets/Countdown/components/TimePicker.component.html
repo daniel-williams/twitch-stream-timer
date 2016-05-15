@@ -1,0 +1,48 @@
+<div class='timepicker'>
+  <table>
+    <tbody>
+      <tr class='text-center'>
+        <td>
+          <a (click)='handleAddHours()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-up'></span></a>
+        </td>
+        <td></td>
+        <td>
+          <a (click)='handleAddMinutes()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-up'></span></a>
+        </td>
+        <td></td>
+      </tr>
+      <tr>
+        <td class='form-group'>
+          <input type='text' class='form-control number-input'
+            [(ngModel)]='hours'
+            (keyup)='handleHoursKeyup($event)'
+            (blur)='handleHoursBlur()'>
+        </td>
+        <td><span class='seperator'>:</span></td>
+        <td class='form-group'>
+          <input type='text' class='form-control number-input'
+            [(ngModel)]='minutes'
+            (keyup)='handleMinutesKeyup($event)'
+            (blur)='handleMinutesBlur()'>
+        </td>
+        <td>
+          <button type='btn btn-default' (click)='toggleMeridian()'>{{meridian}}</button>
+        </td>
+      </tr>
+      <tr class='text-center'>
+        <td>
+          <a (click)='handleSubtractHours()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-down'></span></a>
+        </td>
+        <td></td>
+        <td>
+          <a (click)='handleSubtractMinutes()'
+            class='btn btn-link'><span class='glyphicon glyphicon-chevron-down'></span></a>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
