@@ -4,8 +4,8 @@ import {Donation} from '../Donation';
 import {numberConverter} from '../../../utils/TypeConverters';
 
 
-let template = require('./donations.component.html');
-let style = require('./donations.component.scss');
+let template = require('./Donations.component.html');
+let style = require('./Donations.component.scss');
 
 @Component({
   selector: 'donations',
@@ -28,6 +28,13 @@ export class DonationsComponent {
     this.donations = v;
   }
 
+  private handleAdd(val: number): void {
+    let amount = numberConverter(val);
+    if (amount > 0) {
+      this.donations.push(new Donation(amount));
+    }
+  }
+
   private handleDonation(evt): void {
     let amount = numberConverter(this.donation.amount);
     if (amount > 0) {
@@ -41,6 +48,7 @@ export class DonationsComponent {
     for (; idx >= 0; idx--) {
       if (this.donations[idx].amount === item.amount && this.donations[idx].name === item.name) {
         this.donations.splice(idx, 1);
+        break;
       }
     }
   }

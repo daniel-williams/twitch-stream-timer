@@ -3,61 +3,59 @@ export let COUNTDOWN_CONFIG = new OpaqueToken('countdown.config');
 
 
 export interface IConfig {
-  minHeight?: number;
-  maxHeight?: number;
+  timelineHeight?: number;
+  widgetHeight?: number;
 
-  foregroundColor?: string;
   backgroundColor?: string;
-  maxTimelineColor?: string;
-  committedTimelineColor?: string;
-  elapsedTimelineColor?: string;
+
+  elapsedBgColor?: string;
+  minBgColor?: string;
+  maxBgColor?: string;
 
   startTime?: Date;
-  endTime?: number;
-  maxTime?: number;
+  minMilliseconds?: number;
+  maxMilliseconds?: number;
 }
 
 const Defaults: IConfig = {
-  minHeight: 50,
-  maxHeight: 75,
+  timelineHeight: 25,
+  widgetHeight: 50,
 
-  foregroundColor: '#ffffff',
   backgroundColor: '#04ff02',
-  maxTimelineColor: '#ff0203',
-  committedTimelineColor: '#ff7102',
-  elapsedTimelineColor: '#ffea02',
+  elapsedBgColor: '#ffea02',
+  minBgColor: '#ff7102',
+  maxBgColor: '#04ff02',
 };
 
 export class Config implements IConfig {
-  minHeight: number;
-  maxHeight: number;
+  timelineHeight: number;
+  widgetHeight: number;
 
-  foregroundColor: string;
   backgroundColor: string;
-  maxTimelineColor: string;
-  committedTimelineColor: string;
-  elapsedTimelineColor: string;
+
+  elapsedBgColor: string;
+  minBgColor: string;
+  maxBgColor: string;
 
   startTime: Date;
-  endTime: number;
-  maxTime: number;
+  minMilliseconds: number;
+  maxMilliseconds: number;
 
   constructor(options?: IConfig) {
     options = Object.assign({}, Defaults, options || {});
     let now = new Date();
 
-    this.minHeight = options.minHeight;
-    this.maxHeight = options.maxHeight;
+    this.timelineHeight = options.timelineHeight;
+    this.widgetHeight = options.widgetHeight;
 
-    this.foregroundColor = options.foregroundColor;
     this.backgroundColor = options.backgroundColor;
-    this.maxTimelineColor = options.maxTimelineColor;
-    this.committedTimelineColor = options.committedTimelineColor;
-    this.elapsedTimelineColor = options.elapsedTimelineColor;
+    this.maxBgColor = options.maxBgColor;
+    this.minBgColor = options.minBgColor;
+    this.elapsedBgColor = options.elapsedBgColor;
 
     this.startTime = options.startTime || now;
-    this.endTime = options.endTime || 1000 * 60 * 60 * 2;
-    this.maxTime = options.maxTime || 1000 * 60 * 60 * 4;
+    this.minMilliseconds = options.minMilliseconds || 1000 * 60 * 60 * 2;
+    this.maxMilliseconds = options.maxMilliseconds || 1000 * 60 * 60 * 4;
   }
 }
 

@@ -1,13 +1,15 @@
-<div class='timeline' [ngStyle]='getTimelineStyle()'>
-  <div class='segments-wrap clearfix' [ngStyle]='getSegmentsWrapStyle()'>
+<div [ngStyle]='getTimelineStyle()'>
+  <div class='segments-wrap' [ngStyle]='getSegmentsWrapStyle()'>
     <div class='segment segment-elapsed'
       *ngIf='isStreaming'
       [ngStyle]='getElapsedStyle()'></div>
     <div class='segment segment-min'
       *ngIf='isStreaming'
-      [ngStyle]='getMinStyle()'><span class='lbl'>{{timeRemaining}}</span></div>
+      [ngStyle]='getMinStyle()'></div>
     <div class='segment segment-max'
       *ngIf='isStreaming'
       [ngStyle]='getMaxStyle()'></div>
+    <div class='status'
+      [ngStyle]='getStatusStyle()'>{{status}}</div>
   </div>
 </div>

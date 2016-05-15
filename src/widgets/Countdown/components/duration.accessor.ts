@@ -1,7 +1,7 @@
 import {Directive, forwardRef, Provider} from 'angular2/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
 
-import {DurationComponent} from './duration.component';
+import {DurationComponent} from './Duration.component';
 
 
 const DURATION_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {

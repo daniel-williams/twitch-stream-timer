@@ -1,12 +1,14 @@
 import {Component} from 'angular2/core';
+import {NgStyle} from 'angular2/common';
 
-import {SettingsComponent} from './components/settings.component';
-import {TimelineComponent} from './components/timeline.component';
+import {SettingsComponent} from './components/Settings.component';
+import {TimelineComponent} from './components/Timeline.component';
 import {Config} from './Config';
+import {Goal} from './Goal';
 
 
-let template = require('./countdown.component.html');
-let style = require('./countdown.component.scss');
+let template = require('./Countdown.component.html');
+let style = require('./Countdown.component.scss');
 
 @Component({
   selector: 'countdown',
@@ -16,12 +18,11 @@ let style = require('./countdown.component.scss');
 })
 export class CountdownComponent {
   config: Config = new Config();
+  goal: Goal = new Goal();
 
-  // TODO(djw): Remove this when we're done testing
-  get diagnostic() {
-    return JSON.stringify({
-      settings: JSON.stringify(this.config),
-      // goal: JSON.stringify(this.goal),
-    });
+  getSettingsStyle() {
+    return {
+      top: this.config.widgetHeight + 'px',
+    };
   }
 }

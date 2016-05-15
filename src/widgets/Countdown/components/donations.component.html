@@ -1,21 +1,35 @@
 <div class='donations'>
-  <div class='row'>
-    <div class='col-sm-3 form-group'>
-      <label for='height'>Amount</label>
-      <input type='text' class='form-control' [(ngModel)]='donation.amount' />
-    </div>
-    <div class='col-sm-3 form-group'>
-      <label for='height'>Name</label>
-      <input type='text' class='form-control' [(ngModel)]='donation.name' />
-    </div>
-    <div class='col-sm-3 form-group'>
-      <div><label>&nbsp;</label></div>
-      <button type='button' class='btn btn-default' (click)='handleDonation($event)'>Add</button>
+
+  <div class='donation-controls'>
+    <h4>Add Donation</h4>
+    <div class='row'>
+      <div class='col'>
+        <button class='btn btn-primary' (click)='handleAdd(5)'>$5.00</button>
+      </div>
+      <div class='col'>
+        <button class='btn btn-primary' (click)='handleAdd(10)'>$10.00</button>
+      </div>
+      <div class='col'>
+        <button class='btn btn-primary' (click)='handleAdd(20)'>$20.00</button>
+      </div>
+      <div class='col'>
+        <div class='input-group' style='width:200px'>
+          <span class="input-group-btn">
+            <button type='button' class='btn btn-primary' (click)='handleDonation($event)'>Add $</button>
+          </span>
+          <input type='text' class='form-control' [(ngModel)]='donation.amount' placeholder='amount' />
+        </div>
+      </div>
     </div>
   </div>
-  <div *ngIf='donations && donations.length' class='row donation-list'>
-    <div *ngFor='#item of donations' class='col donation'>
-      <div>{{item.amount | currency:'USD':true:1.2.2}} : {{item.name || '?'}}<span class='remove glyphicon glyphicon-remove' (click)='handleRemove(item)'></span></div>
+
+  <div class='donation-list' style='margin-top: 20px;'>
+    <h4>Current Donations</h4>
+    <div class='row'>
+      <div *ngFor='let item of donations' class='col donation'>
+        <div>{{item.amount | currency:'USD':true:1.2.2}} : {{item.name || '?'}}<span class='remove glyphicon glyphicon-remove' (click)='handleRemove(item)'></span></div>
+      </div>
     </div>
   </div>
+
 </div>

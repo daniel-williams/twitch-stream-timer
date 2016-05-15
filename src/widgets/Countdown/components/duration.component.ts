@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from 'angular2/core';
 
 
-let template = require('./duration.component.html');
-let style = require('./duration.component.scss');
+let template = require('./Duration.component.html');
+let style = require('./Duration.component.scss');
 
 let MILLIS_PER_MINUTE = (60 * 1000);
 let MILLIS_PER_HOUR = (60 * MILLIS_PER_MINUTE);

@@ -1,7 +1,7 @@
 import {Directive, forwardRef, Provider} from 'angular2/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from 'angular2/common';
 
-import {DonationsComponent} from './donations.component';
+import {DonationsComponent} from './Donations.component';
 
 
 const DONATION_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {

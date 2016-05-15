@@ -1,6 +1,7 @@
-<div id='twitch-widget-config' class='container'>
+<div class='container'>
   <div class='config-group'>
-    <h4>Current Donations</h4>
+    <donations [(ngModel)]='goal.donations'></donations>
+    <h4>Totals</h4>
     <div class='row'>
       <div class='col-xs-3'>
         <label>Total: {{goal.currentAmount | currency:'USD':true:1.2.2}} ({{(goal.currentAmount / goal.targetAmount) * 100}}%)</label>
@@ -9,36 +10,28 @@
         <label>Today's goal: {{goal.targetAmount | currency:'USD':true:1.2.2}}</label>
       </div>
     </div>
-    <h4>Donations</h4>
-    <donations [(ngModel)]='goal.donations'></donations>
   </div>
   <div class='config-group'>
     <h3 class='ttl'>Stream Session</h3>
     <div class='row'>
       <div class='col form-group time-picker'>
         <label for='startTime'>Start at</label>
-        <timepicker [(ngModel)]='config.startTime' [showMeridian]='isMeridian' [minuteStep]='timeInterval' justified='true'></timepicker>
+        <timepicker [(ngModel)]='config.startTime' [interval]='timeInterval'></timepicker>
       </div>
       <div class='col form-group time-picker'>
-        <label for='endTime'>Stream for (hh/mm)</label>
-        <duration [(ngModel)]='config.endTime' [interval]='timeInterval' (valueChange)='handleEndTimeChange($event)'></duration>
+        <label for='minMilliseconds'>Stream for (hh/mm)</label>
+        <duration [(ngModel)]='config.minMilliseconds' [interval]='timeInterval' (valueChange)='handleEndTimeChange($event)'></duration>
       </div>
       <div class='col form-group time-picker'>
-        <label for='maxTime'>Stream up to (hh/mm)</label>
-        <duration [(ngModel)]='config.maxTime' [interval]='timeInterval' (valueChange)='handleMaxTimeChange($event)'></duration>
+        <label for='maxMilliseconds'>Stream up to (hh/mm)</label>
+        <duration [(ngModel)]='config.maxMilliseconds' [interval]='timeInterval' (valueChange)='handleMaxTimeChange($event)'></duration>
       </div>
     </div>
     <div class='row'>
       <div class='col form-group'>
-        <label class='block'>Time Format</label>
-        <select class='form-control' [(ngModel)]='timeFormat' (change)='handleTimeFormatChange($event)'>
-          <option *ngFor='#opt of formats' [value]='opt'>{{opt}}</option>
-        </select>
-      </div>
-      <div class='col form-group'>
         <label class='block'>time interval:</label>
         <select class='form-control' [(ngModel)]='timeInterval'>
-          <option *ngFor='#opt of intervals' [value]='opt'>{{opt}}</option>
+          <option *ngFor='let opt of intervals' [value]='opt'>{{opt}}</option>
         </select>
       </div>
     </div>
@@ -49,19 +42,15 @@
     <div class='row'>
       <div class='col-sm-3 form-group'>
         <label for='height'>Min Height</label>
-        <input type='text' class='form-control' [(ngModel)]='config.minHeight' />
+        <input type='text' class='form-control' [(ngModel)]='config.timelineHeight' />
       </div>
       <div class='col-sm-3 form-group'>
         <label for='height'>Max Height</label>
-        <input type='text' class='form-control' [(ngModel)]='config.maxHeight' />
+        <input type='text' class='form-control' [(ngModel)]='config.widgetHeight' />
       </div>
     </div>
     <h4>Colors</h4>
     <div class='row'>
-      <div class='col-sm-3 form-group'>
-        <label for='height'>Foreground</label>
-        <input type='text' class='form-control' [(ngModel)]='config.foregroundColor' />
-      </div>
       <div class='col-sm-3 form-group'>
         <label for='height'>Background</label>
         <input type='text' class='form-control' [(ngModel)]='config.backgroundColor' />
@@ -69,16 +58,16 @@
     </div>
     <div class='row'>
       <div class='col-sm-3 form-group'>
-        <label for='height'>Max</label>
-        <input type='text' class='form-control' [(ngModel)]='config.maxTimelineColor' />
+        <label for='height'>Elapsed Background</label>
+        <input type='text' class='form-control' [(ngModel)]='config.elapsedBgColor' />
       </div>
       <div class='col-sm-3 form-group'>
-        <label for='height'>Committed</label>
-        <input type='text' class='form-control' [(ngModel)]='config.committedTimelineColor' />
+        <label for='height'>Min Background</label>
+        <input type='text' class='form-control' [(ngModel)]='config.minBgColor' />
       </div>
       <div class='col-sm-3 form-group'>
-        <label for='height'>Elapsed</label>
-        <input type='text' class='form-control' [(ngModel)]='config.elapsedTimelineColor' />
+        <label for='height'>Max Background</label>
+        <input type='text' class='form-control' [(ngModel)]='config.maxBgColor' />
       </div>
     </div>
   </div>

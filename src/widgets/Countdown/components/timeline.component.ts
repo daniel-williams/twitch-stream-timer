@@ -4,8 +4,8 @@ import {NgClass, NgStyle} from 'angular2/common';
 import {Config} from '../Config';
 
 
-let template = require('./timeline.component.html');
-let style = require('./timeline.component.scss');
+let template = require('./Timeline.component.html');
+let style = require('./Timeline.component.scss');
 
 const MILLIS_PER_SECOND: number = 1000;
 const MILLIS_PER_MINUTE: number = MILLIS_PER_SECOND * 60;
@@ -16,9 +16,13 @@ let countdownTimer = null;
   selector: 'timeline',
   template: template,
   styles: [style],
+  host: {
+    '[class.timeline]': 'true',
+  }
 })
 export class TimelineComponent implements OnInit, OnDestroy {
   @Input() config: Config;
+  @Input() progress: number;
 
   private now: Date;
   private startTime: Date;
@@ -30,9 +34,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   private isNotStreaming: boolean = false;
   private isAfterStream: boolean = false;
 
-  private timeUntilStream: string = '';
-  private timeStreaming: string = '';
-  private timeRemaining: string = '';
+  private status: string = '';
 
   ngOnInit() {
     countdownTimer = setInterval(this.tick.bind(this), 1000);
@@ -46,14 +48,13 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
   getTimelineStyle() {
     return {
-      height: this.config.maxHeight + 'px',
-      padding: (this.config.maxHeight - this.config.minHeight) / 2 + 'px 0',
+      height: this.config.widgetHeight + 'px',
       backgroundColor: this.config.backgroundColor,
     };
   }
 
   getSegmentsWrapStyle() {
-    let h = this.config.minHeight + 'px';
+    let h = this.config.timelineHeight + 'px';
     return {
       height: h,
       lineHeight: h,
@@ -63,68 +64,93 @@ export class TimelineComponent implements OnInit, OnDestroy {
   getElapsedStyle() {
     let span = this.now.getTime() - this.startTime.getTime();
     let w = this.isStreaming
-     ? (span / this.config.maxTime * 100) + '%'
+     ? (span / this.config.maxMilliseconds * 100) + '%'
      : 0;
 
     return {
       width: w,
-      backgroundColor: this.config.elapsedTimelineColor,
+      backgroundColor: this.config.elapsedBgColor,
     };
   }
 
   getMinStyle() {
-    let span = this.minEndTime.getTime() - this.now.getTime();
+    let span = this.minEndTime.getTime() - this.startTime.getTime();
     let w = this.isStreaming
-     ? (span / this.config.maxTime * 100) + '%'
-     : 0;
-     console.log('minStyle width:', span, w);
+      ? (span / this.config.maxMilliseconds * 100) + '%'
+      : 0;
+
     return {
       width: w,
-      backgroundColor: this.config.committedTimelineColor,
+      backgroundColor: this.config.minBgColor,
     };
   }
 
   getMaxStyle() {
     return {
+      backgroundColor: this.config.maxBgColor,
     };
+  }
+
+  getStatusStyle() {
+    let style = {};
+    if (this.isStreaming) {
+      let p = (this.now.getTime() - this.startTime.getTime()) / this.config.maxMilliseconds * 100;
+      if (p < 50) {
+        style['marginLeft'] = p + '%';
+      } else {
+        style['marginRight'] = (100 - p) + '%';
+      }
+    } else {
+      style['text-align'] = 'center';
+    }
+    return style;
   }
 
 
   private tick() {
     this.now = new Date();
     this.startTime = this.config.startTime;
-    this.minEndTime = new Date(this.startTime.getTime() + this.config.endTime);
-    this.maxEndTime = new Date(this.startTime.getTime() + this.config.maxTime);
+    this.maxEndTime = new Date(this.startTime.getTime() + this.config.maxMilliseconds);
+
+    let goalSpan = Math.max(0,
+      this.maxEndTime.getTime() -
+      (this.startTime.getTime() + this.config.minMilliseconds)) * this.progress;
+    this.minEndTime = new Date(this.startTime.getTime() + this.config.minMilliseconds + goalSpan);
 
     this.isBeforeStream = this.now < this.startTime;
     this.isStreaming = this.now >= this.config.startTime && this.now <= this.minEndTime;
     this.isNotStreaming = !this.isStreaming;
     this.isAfterStream = this.now > this.minEndTime;
 
-    this.timeUntilStream = this.isBeforeStream
-      ? this.timeFromMilliseconds(Math.abs(this.startTime.getTime() - this.now.getTime()))
-      : '';
-    this.timeStreaming = this.isStreaming
-      ? this.timeFromMilliseconds(Math.abs(this.now.getTime() - this.startTime.getTime()))
-      : '';
-    this.timeRemaining = this.isStreaming
-      ? this.timeFromMilliseconds(Math.abs(this.minEndTime.getTime() - this.now.getTime()))
-      : '';
+    this.status = this.isBeforeStream
+      ? 'Stream starting in ' + this.labelFromMilliseconds(
+        Math.max(this.startTime.getTime() - this.now.getTime(), 0))
+      : this.isStreaming
+        ? this.labelFromMilliseconds(
+          Math.max(this.minEndTime.getTime() - this.now.getTime(), 0))
+        : 'Thank you for watching!';
   }
 
 
-  private timeFromMilliseconds(delta: number): string {
+  private labelFromMilliseconds(delta: number): string {
     let hours = Math.floor(delta / MILLIS_PER_HOUR);
     delta -= hours * MILLIS_PER_HOUR;
     let minutes = Math.floor(delta / MILLIS_PER_MINUTE);
     delta -= minutes * MILLIS_PER_MINUTE;
     let seconds = Math.floor(delta / MILLIS_PER_SECOND);
-    return `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(seconds)}`;
+
+    let sLabel = hours || minutes || seconds
+      ? seconds + 's'
+      : '';
+    let mLabel = hours || minutes
+      ? minutes + 'm'
+      : '';
+    let hLabel = hours
+      ? hours + 'h'
+      : '';
+
+    return `${hLabel} ${mLabel} ${sLabel}`;
   }
 
-  private pad(value: string|number): string {
-    return (value.toString().length < 2)
-      ? '0' + value
-      : value.toString();
-  }
+
 }

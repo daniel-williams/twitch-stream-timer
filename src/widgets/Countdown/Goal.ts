@@ -23,4 +23,8 @@ export class Goal {
   reachedGoal(): boolean {
     return this.currentAmount >= this.targetAmount;
   }
+
+  getProgress(): number {
+    return Math.min(1, this.currentAmount / this.targetAmount);
+  }
 }
