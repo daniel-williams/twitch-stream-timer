@@ -1,8 +1,4 @@
 <div class='countdown'>
-  <div class='timeline-wrap'>
-    <timeline [config]='config'></timeline>
-  </div>
-  <div class='settings-wrap'>
-    <settings [(config)]='config'></settings>
-  <div>
+  <timeline [config]='config' [progress]='goal.getProgress()'></timeline>
+  <settings [(config)]='config' [(goal)]='goal' [ngStyle]='getSettingsStyle()'></settings>
 </div>
