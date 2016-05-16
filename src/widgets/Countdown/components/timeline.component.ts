@@ -12,6 +12,12 @@ const MILLIS_PER_MINUTE: number = MILLIS_PER_SECOND * 60;
 const MILLIS_PER_HOUR: number = MILLIS_PER_MINUTE * 60;
 let countdownTimer = null;
 
+enum StatusPosition {
+  Left,
+  Right,
+  Center
+}
+
 @Component({
   selector: 'timeline',
   template: template,
@@ -49,7 +55,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
   getTimelineStyle() {
     return {
       height: this.config.widgetHeight + 'px',
-      backgroundColor: this.config.backgroundColor,
+      backgroundColor: '#' + this.config.backgroundColor,
     };
   }
 
@@ -69,41 +75,43 @@ export class TimelineComponent implements OnInit, OnDestroy {
 
     return {
       width: w,
-      backgroundColor: this.config.elapsedBgColor,
+      backgroundColor: '#' + this.config.elapsedBgColor,
     };
   }
 
   getMinStyle() {
-    let span = this.minEndTime.getTime() - this.startTime.getTime();
+    let elapsedSpan = this.now.getTime() - this.startTime.getTime();
+    let offset = (elapsedSpan / this.config.maxMilliseconds * 100) + '%';
+    let minSpan = this.minEndTime.getTime() - this.now.getTime();
     let w = this.isStreaming
-      ? (span / this.config.maxMilliseconds * 100) + '%'
+      ? (minSpan / this.config.maxMilliseconds * 100) + '%'
       : 0;
 
     return {
+      marginLeft: offset,
       width: w,
-      backgroundColor: this.config.minBgColor,
+      backgroundColor: '#' + this.config.minBgColor,
     };
   }
 
   getMaxStyle() {
     return {
-      backgroundColor: this.config.maxBgColor,
+      backgroundColor: '#' + this.config.maxBgColor,
     };
   }
 
-  getStatusStyle() {
+  get statusPos(): StatusPosition {
     let style = {};
     if (this.isStreaming) {
-      let p = (this.now.getTime() - this.startTime.getTime()) / this.config.maxMilliseconds * 100;
-      if (p < 50) {
-        style['marginLeft'] = p + '%';
+      let et = (this.now.getTime() - this.startTime.getTime());
+      let mt = (this.minEndTime.getTime() - this.now.getTime());
+      if (et < mt) {
+        return StatusPosition.Left;
       } else {
-        style['marginRight'] = (100 - p) + '%';
+        return StatusPosition.Right;
       }
-    } else {
-      style['text-align'] = 'center';
     }
-    return style;
+    return StatusPosition.Center;
   }
 
 

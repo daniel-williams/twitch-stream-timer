@@ -1,4 +1,4 @@
-import {Component, Input} from 'angular2/core';
+import {Component, Input, AfterViewInit} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgStyle} from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {NgForm} from 'angular2/common';
@@ -43,7 +43,7 @@ let intervals = [1, 5, 10, 15, 30, 45, 60]; // TODO(djw): convert into value pro
     '[class.settings]': 'true'
   },
 })
-export class SettingsComponent {
+export class SettingsComponent implements AfterViewInit {
 
   @Input() config: Config;
   @Input() goal: Goal;
@@ -53,6 +53,20 @@ export class SettingsComponent {
 
   get intervals() {
     return intervals;
+  }
+
+  ngAfterViewInit() {
+    let jscolor = (<any>window).jscolor;
+    if (jscolor) {
+      let items = document.querySelectorAll('.settings input.color');
+      for (let i = 0; i < items.length; i++) {
+        let p = new jscolor(items[i]).fromString((<HTMLInputElement>items[i]).value);
+      }
+    }
+  }
+
+  private handleColorChange(val, prop) {
+    this.config[prop] = val;
   }
 
   private handleEndTimeChange(v: number): void {

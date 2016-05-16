@@ -53,21 +53,19 @@
     <div class='row'>
       <div class='col-sm-3 form-group'>
         <label for='height'>Background</label>
-        <input type='text' class='form-control' [(ngModel)]='config.backgroundColor' />
+        <input type='text' class='form-control color' [value]='config.backgroundColor' (change)='handleColorChange($event.target.value, "backgroundColor")' />
       </div>
-    </div>
-    <div class='row'>
       <div class='col-sm-3 form-group'>
         <label for='height'>Elapsed Background</label>
-        <input type='text' class='form-control' [(ngModel)]='config.elapsedBgColor' />
+        <input type='text' class='form-control color' [(ngModel)]='config.elapsedBgColor' (change)='handleColorChange($event.target.value, "elapsedBgColor")' />
       </div>
       <div class='col-sm-3 form-group'>
         <label for='height'>Min Background</label>
-        <input type='text' class='form-control' [(ngModel)]='config.minBgColor' />
+        <input type='text' class='form-control color' [(ngModel)]='config.minBgColor' (change)='handleColorChange($event.target.value, "minBgColor")' />
       </div>
       <div class='col-sm-3 form-group'>
         <label for='height'>Max Background</label>
-        <input type='text' class='form-control' [(ngModel)]='config.maxBgColor' />
+        <input type='text' class='form-control color' [(ngModel)]='config.maxBgColor' (change)='handleColorChange($event.target.value, "maxBgColor")' />
       </div>
     </div>
   </div>

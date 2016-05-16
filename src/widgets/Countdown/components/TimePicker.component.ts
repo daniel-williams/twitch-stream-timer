@@ -104,6 +104,9 @@ export class TimePicker {
 
   private viewToModelUpdate() {
     let h = parseInt(this.hours, 10);
+    if (this.meridian === 'PM') { // TODO(djw): refactor for magic string
+      h += 12;
+    }
     let m = parseInt(this.minutes, 10);
     if (isNaN(h) || isNaN(m)) {
       this.modelToViewUpdate();
@@ -139,7 +142,7 @@ export class TimePicker {
     let m = this.value.getMinutes();
     this.minutes = this.pad(m);
 
-    this.meridian = this.value.getHours() >= 12 ? 'PM' : 'AM';
+    this.meridian = this.value.getHours() >= 12 ? 'PM' : 'AM'; // TODO(djw): refactor magic strings
   }
 
   private pad(value: string|number): string {

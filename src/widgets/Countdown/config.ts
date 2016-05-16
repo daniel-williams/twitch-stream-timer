@@ -21,10 +21,10 @@ const Defaults: IConfig = {
   timelineHeight: 25,
   widgetHeight: 50,
 
-  backgroundColor: '#04ff02',
-  elapsedBgColor: '#ffea02',
-  minBgColor: '#ff7102',
-  maxBgColor: '#04ff02',
+  backgroundColor: '04ff02',
+  elapsedBgColor: 'ffea02',
+  minBgColor: 'ff7102',
+  maxBgColor: '04ff02',
 };
 
 export class Config implements IConfig {

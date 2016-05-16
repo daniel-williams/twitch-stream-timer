@@ -16,7 +16,6 @@
   "license": "MIT",
   "dependencies": {
     "angular2": "^2.0.0-beta.17",
-    "angular2-color-picker": "^1.0.3",
     "body-parser": "^1.15.1",
     "connect-livereload": "^0.5.4",
     "es6-shim": "^0.35.0",
