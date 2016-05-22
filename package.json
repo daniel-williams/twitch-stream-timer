@@ -1,5 +1,5 @@
 {
-  "name": "twitch-widget",
+  "name": "twitch-stream-timer",
   "version": "1.0.0",
   "description": "Call to action countdown widget for live stream broadcasters.",
   "scripts": {
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/daniel-williams/twitch-widget.git"
+    "url": "https://github.com/daniel-williams/twitch-stream-timer.git"
   },
   "keywords": [],
   "author": "Daniel James Williams",
