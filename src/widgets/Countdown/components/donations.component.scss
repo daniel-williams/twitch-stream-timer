@@ -8,6 +8,7 @@
     border-radius: 4px;
     color: #333;
     background-color: #eee;
+    margin-bottom: 10px;
 
     .remove {
       font-weight: normal;
@@ -15,10 +16,6 @@
       color: #999;
       margin-left: 10px;
       cursor: pointer;
-
-      // &:before {
-      //   content: "|"
-      // }
     }
   }
 }

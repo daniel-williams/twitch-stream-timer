@@ -65,6 +65,15 @@ export class SettingsComponent implements AfterViewInit {
     }
   }
 
+  private handleTargetChanged(target) {
+    let amount = parseInt(target.value, 10);
+    if (!isNaN(amount)) {
+      this.goal.targetAmount = amount;
+    } else {
+      target.value = this.goal.targetAmount;
+    }
+  }
+
   private handleColorChange(val, prop) {
     this.config[prop] = val;
   }

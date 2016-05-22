@@ -1,13 +1,16 @@
 <div class='container'>
   <div class='config-group'>
-    <donations [(ngModel)]='goal.donations'></donations>
-    <h4>Totals</h4>
+    <h3 class='ttl'>Donations</h3>
     <div class='row'>
       <div class='col-xs-3'>
-        <label>Total: {{goal.currentAmount | currency:'USD':true:1.2.2}} ({{(goal.currentAmount / goal.targetAmount) * 100}}%)</label>
+        <label class='control-label'>Today's goal:</label>
+        <input type='text' class='form-control' [value]='goal.targetAmount' (change)='handleTargetChanged($event.target)' />
       </div>
+    </div>
+    <donations [(ngModel)]='goal.donations'></donations>
+    <div class='row mt'>
       <div class='col-xs-3'>
-        <label>Today's goal: {{goal.targetAmount | currency:'USD':true:1.2.2}}</label>
+        <label>Total: {{goal.totalDonations | currency:'USD':true:1.2.2}} ({{goal.displayProgress()}})</label>
       </div>
     </div>
   </div>
@@ -33,6 +36,16 @@
         <select class='form-control' [(ngModel)]='timeInterval'>
           <option *ngFor='let opt of intervals' [value]='opt'>{{opt}}</option>
         </select>
+      </div>
+    </div>
+    <div class='row'>
+      <div class='xs-col-12'>
+        <label class='control-label'>Pre Stream Message</label>
+        <input type='text' [(ngModel)]='config.preStreamMessage' class='form-control' />
+      </div>
+      <div class='xs-col-12'>
+        <label class='control-label'>Post Stream Message</label>
+        <input type='text' [(ngModel)]='config.postStreamMessage' class='form-control' />
       </div>
     </div>
   </div>

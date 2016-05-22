@@ -9,7 +9,6 @@
     <div class='segment segment-max'
       *ngIf='isStreaming'
       [ngStyle]='getMaxStyle()'></div>
-    <!--<div class='status'
-      [ngStyle]='getStatusStyle()'>{{status}}</div>-->
+    <div *ngIf='statusPos === 2' class='status not-streaming'>{{status}}</div>
   </div>
 </div>

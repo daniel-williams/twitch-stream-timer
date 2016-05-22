@@ -131,14 +131,13 @@ export class TimelineComponent implements OnInit, OnDestroy {
     this.isAfterStream = this.now > this.minEndTime;
 
     this.status = this.isBeforeStream
-      ? 'Stream starting in ' + this.labelFromMilliseconds(
-        Math.max(this.startTime.getTime() - this.now.getTime(), 0))
+      ? this.config.preStreamMessage.replace('$timer', this.labelFromMilliseconds(
+        Math.max(this.startTime.getTime() - this.now.getTime(), 0)))
       : this.isStreaming
         ? this.labelFromMilliseconds(
           Math.max(this.minEndTime.getTime() - this.now.getTime(), 0))
-        : 'Thank you for watching!';
+        : this.config.postStreamMessage;
   }
-
 
   private labelFromMilliseconds(delta: number): string {
     let hours = Math.floor(delta / MILLIS_PER_HOUR);

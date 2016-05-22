@@ -2,29 +2,31 @@ import {Donation} from './Donation';
 
 
 export class Goal {
-  targetAmount: number;
-  donations: Donation[];
+  public targetAmount: number;
+  public donations: Donation[];
 
   constructor(targetAmount?: number) {
     this.targetAmount = targetAmount || 20;
     this.donations = [];
   }
 
-  get count(): number {
+  get donationCount(): number {
     return this.donations.length;
   }
-  get currentAmount(): number {
+  get totalDonations(): number {
     return this.donations.reduce((total, item) => {
       total += item.amount;
       return total;
     }, 0);
   }
-
-  reachedGoal(): boolean {
-    return this.currentAmount >= this.targetAmount;
+  get hasReachedTarget(): boolean {
+    return this.totalDonations >= this.targetAmount;
+  }
+  get targetProgress(): number {
+    return Math.min(1, this.totalDonations / this.targetAmount);
   }
 
-  getProgress(): number {
-    return Math.min(1, this.currentAmount / this.targetAmount);
+  public displayProgress(): string {
+    return Math.round((this.totalDonations / this.targetAmount) * 100) + '%';
   }
 }

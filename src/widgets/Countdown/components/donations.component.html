@@ -23,12 +23,15 @@
     </div>
   </div>
 
-  <div class='donation-list' style='margin-top: 20px;'>
+  <div class='donation-list' style='margin: 20px 0 10px'>
     <h4>Current Donations</h4>
-    <div class='row'>
+    <div *ngIf='donations && donations.length' class='row'>
       <div *ngFor='let item of donations' class='col donation'>
         <div>{{item.amount | currency:'USD':true:1.2.2}} : {{item.name || '?'}}<span class='remove glyphicon glyphicon-remove' (click)='handleRemove(item)'></span></div>
       </div>
+    </div>
+    <div *ngIf='!donations || donations.length === 0' class='row'>
+      <div class='col' style='line-height:40px'>none yet</div>
     </div>
   </div>
 

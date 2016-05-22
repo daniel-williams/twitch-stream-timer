@@ -15,6 +15,9 @@ export interface IConfig {
   startTime?: Date;
   minMilliseconds?: number;
   maxMilliseconds?: number;
+
+  preStreamMessage?: string;
+  postStreamMessage?: string;
 }
 
 const Defaults: IConfig = {
@@ -25,6 +28,9 @@ const Defaults: IConfig = {
   elapsedBgColor: 'ffea02',
   minBgColor: 'ff7102',
   maxBgColor: '04ff02',
+
+  preStreamMessage: 'Stream starting in $timer',
+  postStreamMessage: 'Thank you for watching!',
 };
 
 export class Config implements IConfig {
@@ -41,6 +47,9 @@ export class Config implements IConfig {
   minMilliseconds: number;
   maxMilliseconds: number;
 
+  preStreamMessage: string;
+  postStreamMessage: string;
+
   constructor(options?: IConfig) {
     options = Object.assign({}, Defaults, options || {});
     let now = new Date();
@@ -56,6 +65,9 @@ export class Config implements IConfig {
     this.startTime = options.startTime || now;
     this.minMilliseconds = options.minMilliseconds || 1000 * 60 * 60 * 2;
     this.maxMilliseconds = options.maxMilliseconds || 1000 * 60 * 60 * 4;
+
+    this.preStreamMessage = options.preStreamMessage;
+    this.postStreamMessage = options.postStreamMessage;
   }
 }
 

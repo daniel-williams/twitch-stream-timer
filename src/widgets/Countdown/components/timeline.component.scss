@@ -36,7 +36,11 @@
   position: relative;
   display: inline-block;
   padding: 0 20px;
-  text-align: center;
   white-space: nowrap;
   z-index: 100;
+
+  &.not-streaming {
+    display: block;
+    text-align: center;
+  }
 }
