@@ -64,6 +64,7 @@ export class TimelineComponent implements OnInit, OnDestroy {
     return {
       height: h,
       lineHeight: h,
+      color: '#' + this.config.foregroundColor,
     };
   }
 

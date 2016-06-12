@@ -1,7 +1,11 @@
 import {Donation} from './Donation';
 
+export interface IGoal {
+  targetAcount?: number;
+  donations?: Array<Donation>;
+}
 
-export class Goal {
+export class Goal implements IGoal {
   public targetAmount: number;
   public donations: Donation[];
 

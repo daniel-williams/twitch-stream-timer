@@ -6,6 +6,7 @@ export interface IConfig {
   timelineHeight?: number;
   widgetHeight?: number;
 
+  foregroundColor?: string;
   backgroundColor?: string;
 
   elapsedBgColor?: string;
@@ -24,6 +25,7 @@ const Defaults: IConfig = {
   timelineHeight: 25,
   widgetHeight: 50,
 
+  foregroundColor: '000000',
   backgroundColor: '04ff02',
   elapsedBgColor: 'ffea02',
   minBgColor: 'ff7102',
@@ -37,6 +39,7 @@ export class Config implements IConfig {
   timelineHeight: number;
   widgetHeight: number;
 
+  foregroundColor: string;
   backgroundColor: string;
 
   elapsedBgColor: string;
@@ -57,6 +60,7 @@ export class Config implements IConfig {
     this.timelineHeight = options.timelineHeight;
     this.widgetHeight = options.widgetHeight;
 
+    this.foregroundColor = options.foregroundColor;
     this.backgroundColor = options.backgroundColor;
     this.maxBgColor = options.maxBgColor;
     this.minBgColor = options.minBgColor;

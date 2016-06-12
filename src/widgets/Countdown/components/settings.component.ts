@@ -1,10 +1,10 @@
-import {Component, Input, AfterViewInit} from 'angular2/core';
+import {Component, Input, Output, EventEmitter, AfterViewInit} from 'angular2/core';
 import {CORE_DIRECTIVES, FORM_DIRECTIVES, NgStyle} from 'angular2/common';
 import {ROUTER_DIRECTIVES} from 'angular2/router';
 import {NgForm} from 'angular2/common';
 
-import {Config} from '../Config';
-import {Goal} from '../Goal';
+import {Config, IConfig} from '../Config';
+import {Goal, IGoal} from '../Goal';
 import {Donation} from '../Donation';
 import {numberConverter} from '../../../utils/TypeConverters';
 
@@ -48,11 +48,19 @@ export class SettingsComponent implements AfterViewInit {
   @Input() config: Config;
   @Input() goal: Goal;
 
+  @Output() onConfigChanged: EventEmitter<IConfig>;
+  @Output() onGoalChanged: EventEmitter<IGoal>;
+
   public isMeridian: boolean = true;
   public timeInterval: number = 15;
 
-  get intervals() {
+  public get intervals() {
     return intervals;
+  }
+
+  constructor() {
+    this.onConfigChanged = new EventEmitter<IConfig>();
+    this.onGoalChanged = new EventEmitter<IGoal>();
   }
 
   ngAfterViewInit() {
@@ -72,17 +80,38 @@ export class SettingsComponent implements AfterViewInit {
     } else {
       target.value = this.goal.targetAmount;
     }
+    this.onGoalChanged.emit(this.goal);
+  }
+
+  private handleTimelineHeightChange(val) {
+    this.config.timelineHeight = val;
+    this.onConfigChanged.emit(this.config);
+  }
+
+  private handleWidgetHeightChange(val) {
+    this.config.widgetHeight = val;
+    this.onConfigChanged.emit(this.config);
   }
 
   private handleColorChange(val, prop) {
     this.config[prop] = val;
+    this.onConfigChanged.emit(this.config);
   }
 
-  private handleEndTimeChange(v: number): void {
+  private handleStartTimeChange(v: Date): void {
+    this.config.startTime = v;
+    this.onConfigChanged.emit(this.config);
+  }
+
+  private handleMinMillisecondsChange(v: number): void {
+    this.config.minMilliseconds = v;
     this.config.maxMilliseconds = Math.max(v, this.config.maxMilliseconds);
+    this.onConfigChanged.emit(this.config);
   }
 
-  private handleMaxTimeChange(v: number): void {
+  private handleMaxMillisecondsChange(v: number): void {
+    this.config.maxMilliseconds = v;
     this.config.minMilliseconds = Math.min(this.config.minMilliseconds, v);
+    this.onConfigChanged.emit(this.config);
   }
 }

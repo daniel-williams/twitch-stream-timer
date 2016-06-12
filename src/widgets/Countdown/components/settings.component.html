@@ -19,15 +19,15 @@
     <div class='row'>
       <div class='col form-group time-picker'>
         <label for='startTime'>Start at</label>
-        <timepicker [(ngModel)]='config.startTime' [interval]='timeInterval'></timepicker>
+        <timepicker [ngModel]='config.startTime' [interval]='timeInterval' (ngModelChange)='handleStartTimeChange($event)'></timepicker>
       </div>
       <div class='col form-group time-picker'>
         <label for='minMilliseconds'>Stream for (hh/mm)</label>
-        <duration [(ngModel)]='config.minMilliseconds' [interval]='timeInterval' (valueChange)='handleEndTimeChange($event)'></duration>
+        <duration [ngModel]='config.minMilliseconds' [interval]='timeInterval' (ngModelChange)='handleMinMillisecondsChange($event)'></duration>
       </div>
       <div class='col form-group time-picker'>
         <label for='maxMilliseconds'>Stream up to (hh/mm)</label>
-        <duration [(ngModel)]='config.maxMilliseconds' [interval]='timeInterval' (valueChange)='handleMaxTimeChange($event)'></duration>
+        <duration [ngModel]='config.maxMilliseconds' [interval]='timeInterval' (ngModelChange)='handleMaxMillisecondsChange($event)'></duration>
       </div>
     </div>
     <div class='row'>
@@ -55,19 +55,25 @@
     <div class='row'>
       <div class='col-sm-3 form-group'>
         <label for='height'>Min Height</label>
-        <input type='text' class='form-control' [(ngModel)]='config.timelineHeight' />
+        <input type='text' class='form-control' [ngModel]='config.timelineHeight' (ngModelChange)='handleTimelineHeightChange($event)' />
       </div>
       <div class='col-sm-3 form-group'>
         <label for='height'>Max Height</label>
-        <input type='text' class='form-control' [(ngModel)]='config.widgetHeight' />
+        <input type='text' class='form-control' [ngModel]='config.widgetHeight' (ngModelChange)='handleWidgetHeightChange($event)' />
       </div>
     </div>
     <h4>Colors</h4>
     <div class='row'>
       <div class='col-sm-3 form-group'>
+        <label for='height'>Foreground</label>
+        <input type='text' class='form-control color' [value]='config.foregroundColor' (change)='handleColorChange($event.target.value, "foregroundColor")' />
+      </div>
+      <div class='col-sm-3 form-group'>
         <label for='height'>Background</label>
         <input type='text' class='form-control color' [value]='config.backgroundColor' (change)='handleColorChange($event.target.value, "backgroundColor")' />
       </div>
+    </div>
+    <div class='row'>
       <div class='col-sm-3 form-group'>
         <label for='height'>Elapsed Background</label>
         <input type='text' class='form-control color' [(ngModel)]='config.elapsedBgColor' (change)='handleColorChange($event.target.value, "elapsedBgColor")' />

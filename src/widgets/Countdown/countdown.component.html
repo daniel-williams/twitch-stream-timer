@@ -1,4 +1,9 @@
 <div class='countdown'>
   <timeline [config]='config' [progress]='goal.targetProgress'></timeline>
-  <settings [(config)]='config' [(goal)]='goal' [ngStyle]='getSettingsStyle()'></settings>
+  <settings
+    [config]='config'
+    [goal]='goal'
+    [ngStyle]='getSettingsStyle()'
+    (onConfigChanged)='handleOnConfigChanged($event)'
+    (onGoalChanged)='handleOnGoalChanged($event)'></settings>
 </div>
